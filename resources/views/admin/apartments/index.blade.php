@@ -32,9 +32,6 @@
                     @endforeach
                 </tbody>
             </table>
-            <div>
-                {{$apartments->links()}}
-            </div>
         @else
             <h2> Create your own Project</h2>
         @endif
