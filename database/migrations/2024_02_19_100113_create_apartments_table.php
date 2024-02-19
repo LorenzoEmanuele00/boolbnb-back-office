@@ -25,10 +25,10 @@ return new class extends Migration
             $table->string('address');
             $table->decimal('latitude');
             $table->decimal('longitude');
-            $table->tinyInteger('dimension_mq');
-            $table->tinyInteger('rooms_number');
-            $table->tinyInteger('beds_number');
-            $table->tinyInteger('bathrooms_number');
+            $table->smallInteger('dimension_mq')->unsigned();
+            $table->tinyInteger('rooms_number')->unsigned();
+            $table->tinyInteger('beds_number')->unsigned();
+            $table->tinyInteger('bathrooms_number')->unsigned();
             $table->boolean('is_visible')->default(1);
             $table->timestamps();
         });
