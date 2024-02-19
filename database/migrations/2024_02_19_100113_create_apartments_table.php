@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('slug');
             $table->decimal('price', 8, 2)->unsigned();
             $table->string('address');
-            $table->decimal('latitude');
-            $table->decimal('longitude');
+            $table->decimal('latitude', 10, 6);
+            $table->decimal('longitude', 10, 6);
             $table->smallInteger('dimension_mq')->unsigned();
             $table->tinyInteger('rooms_number')->unsigned();
             $table->tinyInteger('beds_number')->unsigned();

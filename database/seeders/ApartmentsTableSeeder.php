@@ -18,14 +18,16 @@ class ApartmentsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        
         for ($i=0; $i < 10; $i++) { 
             $apartment = new Apartment();
+            $apartment->user_id = $faker->numberBetween(1, 5);
             $apartment->title = $faker->sentence(5);
             $apartment->slug = Str::slug($apartment->title);
             $apartment->address = $faker->address();
             $lat_lon = $this->getCoordinatesFromAddress($apartment->address);
-            $apartment->latitude = $lat_lon[0];
-            $apartment->longitude = $lat_lon[1];
+            $apartment->latitude = $lat_lon['coordinates']['lat'];
+            $apartment->longitude = $lat_lon['coordinates']['lon'];
             $apartment->price = $faker->randomFloat(2, 1, 99999);
             $apartment->dimension_mq = $faker->numberBetween(0, 65534);
             $apartment->rooms_number = $faker->numberBetween(2, 100);
@@ -38,19 +40,17 @@ class ApartmentsTableSeeder extends Seeder
     }
     public static function getCoordinatesFromAddress(string $address): array
     {
-        $client = new Client();
-        $response = $client
-            ->get('https://api.tomtom.com/search/2/geocode/'.urlencode($address).'.json', [
+        $client = new Client(['verify' => false]);
+        $addressEncode = $address;
+        $response = $client->get('https://api.tomtom.com/search/2/geocode/%27.'.$addressEncode.'.%27.json', [
             'query' => [
                 'key' => 'bZhPA555PRZ2tCDM2RaSbbHm4xg1LwVn',
+                'limit' => 1
             ]
         ]);
-
+        error_log(print_r($response,true));
         $data = json_decode($response->getBody(), true);
-        $latitude = $data['results'][0]['position']['lat'];
-        $longitude = $data['results'][0]['position']['lon'];
-
-        return compact('latitude', 'longitude');
+        $coordinates = $data['results'][0]['position'];
+        return compact('coordinates');
     }
 }
-

@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         for ($i=0; $i < 5; $i++) { 
             $user = new User();
             $user->email = $faker->freeEmail();
-            $user->name = $faker->name($gender = null|'male'|'female');
+            $user->name = $faker->name();
             $user->password = 'password';
             $user->save();
         }
