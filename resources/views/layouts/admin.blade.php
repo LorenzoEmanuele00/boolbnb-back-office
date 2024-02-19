@@ -79,15 +79,15 @@
                             </li>
 
                             <li class="nav-item mb-2">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.dashboard' ? 'red-bg border rounded-pill' : '' }}"
+                                <a class="nav-link {{ Route::currentRouteName() == 'admin.dashboard' ? 'red-bg border rounded-pill text-white' : 'text-dark' }}"
                                     href="{{ route('admin.dashboard') }}">
                                     <i class="fa-solid fa-list"></i> DashBoard
                                 </a>
                             </li>
 
                             <li class="nav-item mb-2">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.dashboard' ? 'red-bg border rounded-pill' : '' }}"
-                                    href="{{ route('admin.dashboard') }}"> 
+                                <a class="nav-link {{ Route::currentRouteName() == 'admin.apartments.index' ? 'red-bg border rounded-pill text-white' : 'text-dark' }}"
+                                    href="{{ route('admin.apartments.index') }}"> 
                                     {{-- mettere admin index qua sopra --}}
                                     <i class="fa-solid fa-house"></i> I tuoi Appartamenti
                                 </a>
