@@ -8,7 +8,7 @@
             
         </div>
 
-        <h1 class="display-5 fw-bold" style="color: #F31C19">
+        <h1 class="display-5 fw-bold red-font">
             Welcome to BoolBnB
         </h1>
 

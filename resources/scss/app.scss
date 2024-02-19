@@ -6,12 +6,16 @@
     --gray-color: #f8f9fa;
 }
 
-header{
+.blue-bg{
     background-color: var(--blue-color);
 }
 
 .red-bg{
     background-color: var(--red-color);
+}
+
+.red-font{
+    color: var(--red-color)
 }
 
 .gray-bg{
@@ -20,4 +24,8 @@ header{
 
 a{
     text-decoration: none;
+}
+
+.logo{
+        max-width: 100px;
 }
