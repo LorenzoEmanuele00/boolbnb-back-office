@@ -6,12 +6,16 @@
     --gray-color: #f8f9fa;
 }
 
-header{
+.blue-bg{
     background-color: var(--blue-color);
 }
 
 .red-bg{
     background-color: var(--red-color);
+}
+
+.red-font{
+    color: var(--red-color)
 }
 
 .gray-bg{
@@ -20,6 +24,24 @@ header{
 
 a{
     text-decoration: none;
+}
+
+.logo{
+        max-width: 100px;
+}
+
+.appear-768{
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .appear-768{
+        display: inline-block;
+    }
+    
+    .disappear-768{
+        display: none;
+    }
 }
 
 .index_btn {

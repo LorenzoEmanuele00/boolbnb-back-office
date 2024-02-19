@@ -23,11 +23,11 @@
     <div id="app">
 
 
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background-color: #001632">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm blue-bg">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center px-2 m-0" href="{{ url('/') }}">
                     
-                    <img src="{{ asset('images/logo_test.jpg') }}" alt="logo_test" style="width: 75px">
+                    <img src="{{ asset('images/logo_test.png') }}" alt="logo_test" class="logo">
                     <span class="fw-bold text-light">BoolBnB</span>
                     
                 </a>

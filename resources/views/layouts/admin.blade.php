@@ -26,19 +26,25 @@
 <body>
     <div id="app">
 
-        <header class="navbar navbar-dark sticky-top flex-md-nowrap p-2 shadow">
-            <div class="row justify-content-between">
+        <header class="navbar navbar-dark sticky-top flex-md-nowrap p-2 shadow blue-bg">
+            <div class="container">
                 
-                <a class="text-light" href="/"><img src="{{ asset('images/icon_test.png') }}" alt="La tua immagine">Bool BnB</a>
-                <button class="navbar-toggler position-absolute d-md-none collapsed" type="button"
+                <a class="navbar-brand d-flex align-items-center px-2 m-0" href="{{ url('/') }}">
+                    
+                    <img src="{{ asset('images/logo_test.png') }}" alt="logo_test" class="logo">
+                    <span class="fw-bold text-light">BoolBnB</span>
+                    
+                </a>                
+
+                <button class="navbar-toggler d-md-none collapsed" type="button"
                     data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            </div>
-            <div class="navbar-nav">
+            
+            <div class="navbar-nav appear-768">
                 <div class="nav-item text-nowrap ms-2">
-                    <a class="nav-link" href="{{ route('logout') }}"
+                    <a class="nav-link text-light" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
                         {{ __('Esci') }}
@@ -48,6 +54,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </header>
 
         <div class="container-fluid vh-100">
@@ -58,10 +65,31 @@
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light navbar-dark sidebar collapse">
                     <div class="position-sticky pt-3">
                         <ul class="nav flex-column">
-                            <li class="nav-item">
+
+                            <li class="nav-item mb-2 disappear-768">
+                                    <a class="nav-link text-light red-bg border rounded-pill" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                        {{ __('Esci') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                            </li>
+
+                            <li class="nav-item mb-2">
                                 <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.dashboard' ? 'red-bg border rounded-pill' : '' }}"
                                     href="{{ route('admin.dashboard') }}">
-                                    <i class="fa-solid fa-gauge-high fa-lg fa-fw"></i> DashBoard
+                                    <i class="fa-solid fa-list"></i> DashBoard
+                                </a>
+                            </li>
+
+                            <li class="nav-item mb-2">
+                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.dashboard' ? 'red-bg border rounded-pill' : '' }}"
+                                    href="{{ route('admin.dashboard') }}"> 
+                                    {{-- mettere admin index qua sopra --}}
+                                    <i class="fa-solid fa-house"></i> I tuoi Appartamenti
                                 </a>
                             </li>
                         </ul>
