@@ -20,21 +20,18 @@
                             <th scope="row">{{$apartment->id}}</th>
                             <td>{{$apartment->title}}</td>
                             <td>
-                                <a class="btn btn-success" href="{{ route('admin.apartments.show', ['apartment' => $apartment->slug]) }}"><i class="fa-solid fa-info"></i></a>
-                                <a class="btn btn-warning" href="{{ route('admin.apartments.edit', ['apartment' => $apartment->slug]) }}"><i class="fa-solid fa-pencil"></i></a>
+                                <a class="btn btn-success index_btn" href="{{ route('admin.apartments.show', ['apartment' => $apartment->slug]) }}"><i class="fa-solid fa-info"></i></a>
+                                <a class="btn btn-warning index_btn" href="{{ route('admin.apartments.edit', ['apartment' => $apartment->slug]) }}"><i class="fa-solid fa-pencil"></i></a>
                                 <form action="{{ route('admin.apartments.destroy', ['apartment' => $apartment->slug]) }}" class="d-inline-block" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger" type="submit"><i class="fa-regular fa-trash-can"></i></button>
+                                    <button class="btn btn-danger index_btn" type="submit"><i class="fa-regular fa-trash-can"></i></button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <div>
-                {{$apartments->links()}}
-            </div>
         @else
             <h2> Create your own Project</h2>
         @endif
