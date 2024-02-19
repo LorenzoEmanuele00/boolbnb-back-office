@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -16,7 +17,7 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        $apartments = Apartment::where('user_id', '=', Auth::user()->id);
         return view('admin.apartments.index', compact('apartments'));
     }
 
@@ -45,6 +46,8 @@ class ApartmentController extends Controller
         $lat_lon = $this->getCoordinatesFromAddress($apartment->address);
         $apartment->longitude = $lat_lon['coordinates']['lon'];
         $apartment->latitude  = $lat_lon['coordinates']['lat'];
+
+        $apartment->user_id   = Auth::id();
 
         $apartment->save();
         return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug]);
