@@ -11,7 +11,7 @@
 
         <div class="row justify-content-center mt-5">
             <div class="col-6 mb-5">
-                <form action="{{ route('admin.appartaments.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3 has-validation">
@@ -93,11 +93,11 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="cover_image" class="form-label">Immagine</label>
                         <input class="form-control" type="file" id="cover_image" name="cover_image"
                             value="{{ old('cover_image') }}">
-                    </div>
+                    </div> --}}
 
                     <button class="btn btn-success" type="submit">Salva</button>
 
