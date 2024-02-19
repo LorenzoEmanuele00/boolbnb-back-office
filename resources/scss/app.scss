@@ -29,3 +29,17 @@ a{
 .logo{
         max-width: 100px;
 }
+
+.appear-768{
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .appear-768{
+        display: inline-block;
+    }
+    
+    .disappear-768{
+        display: none;
+    }
+}

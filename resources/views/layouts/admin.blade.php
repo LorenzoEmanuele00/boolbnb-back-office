@@ -36,13 +36,13 @@
                     
                 </a>                
 
-                <button class="navbar-toggler position-absolute d-md-none collapsed" type="button"
+                <button class="navbar-toggler d-md-none collapsed" type="button"
                     data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             
-            <div class="navbar-nav">
+            <div class="navbar-nav appear-768">
                 <div class="nav-item text-nowrap ms-2">
                     <a class="nav-link text-light" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
@@ -66,7 +66,7 @@
                     <div class="position-sticky pt-3">
                         <ul class="nav flex-column">
 
-                            <li class="nav-item mb-2">
+                            <li class="nav-item mb-2 disappear-768">
                                     <a class="nav-link text-light red-bg border rounded-pill" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
