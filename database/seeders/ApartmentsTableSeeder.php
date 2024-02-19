@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
+use GuzzleHttp\Client;
 
 class ApartmentsTableSeeder extends Seeder
 {
@@ -21,9 +22,10 @@ class ApartmentsTableSeeder extends Seeder
             $apartment = new Apartment();
             $apartment->title = $faker->sentence(5);
             $apartment->slug = Str::slug($apartment->title);
-            $apartment->address =
-            $apartment->latitude = 
-            $apartment->longitude = 
+            $apartment->address = $faker->address();
+            $lat_lon = $this->getCoordinatesFromAddress($apartment->address);
+            $apartment->latitude = $lat_lon[0];
+            $apartment->longitude = $lat_lon[1];
             $apartment->price = $faker->randomFloat(2, 1, 99999);
             $apartment->dimension_mq = $faker->numberBetween(0, 65534);
             $apartment->rooms_number = $faker->numberBetween(2, 100);
@@ -34,4 +36,21 @@ class ApartmentsTableSeeder extends Seeder
             $apartment->save();
         }
     }
+    public static function getCoordinatesFromAddress(string $address): array
+    {
+        $client = new Client();
+        $response = $client
+            ->get('https://api.tomtom.com/search/2/geocode/'.urlencode($address).'.json', [
+            'query' => [
+                'key' => 'bZhPA555PRZ2tCDM2RaSbbHm4xg1LwVn',
+            ]
+        ]);
+
+        $data = json_decode($response->getBody(), true);
+        $latitude = $data['results'][0]['position']['lat'];
+        $longitude = $data['results'][0]['position']['lon'];
+
+        return compact('latitude', 'longitude');
+    }
 }
+
