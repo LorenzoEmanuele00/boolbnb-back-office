@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\ProfileController;
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'verified'])
     ->prefix('admin') // per URL
     ->group (function () {
         Route::get('/', [DashboardController::class, 'index'])->name ('dashboard');
+        Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
     });
 
 require __DIR__.'/auth.php';
