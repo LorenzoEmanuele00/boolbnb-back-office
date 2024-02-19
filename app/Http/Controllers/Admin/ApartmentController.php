@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreApartmentRequest;
 use App\Models\Apartment;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -37,9 +38,9 @@ class ApartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreApartmentRequest $request)
     {
-        $form_data = $request->all();
+        $form_data = $request->validated();
         $apartment = new Apartment();
         $apartment->fill($form_data);
 
@@ -112,6 +113,8 @@ class ApartmentController extends Controller
         error_log(print_r($response,true));
         $data = json_decode($response->getBody(), true);
         $coordinates = $data['results'][0]['position'];
+        
         return compact('coordinates');
+              
     }
 }
