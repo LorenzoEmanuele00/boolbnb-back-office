@@ -28,7 +28,7 @@
 
                     <div class="mb-3">
                         <label for="price" class="form-label">Prezzo</label>
-                        <input type="number" required step=".01"
+                        <input type="number" required step=".1"
                             class="form-control @error('price') is-invalid @enderror" id="price" name="price"
                             value="{{ old('price') }}">
                     </div>
@@ -51,7 +51,7 @@
 
                     <div class="mb-3">
                         <label for="dimension_mq" class="form-label">Dimensione m²</label>
-                        <input type="number" required class="form-control @error('dimension_mq') is-invalid @enderror"
+                        <input type="number" min="1" max="2000" required class="form-control @error('dimension_mq') is-invalid @enderror"
                             id="dimension_mq" name="dimension_mq" value="{{ old('dimension_mq') }}">
                     </div>
                     @error('dimension_mq')
@@ -62,7 +62,7 @@
 
                     <div class="mb-3">
                         <label for="rooms_number" class="form-label">Numero di Camere</label>
-                        <input type="number" required class="form-control @error('rooms_number') is-invalid @enderror"
+                        <input type="number" min="1" max="50" required class="form-control @error('rooms_number') is-invalid @enderror"
                             id="rooms_number" name="rooms_number" value="{{ old('rooms_number') }}">
                     </div>
                     @error('rooms_number')
@@ -73,7 +73,7 @@
 
                     <div class="mb-3">
                         <label for="beds_number" class="form-label">Numero di Letti</label>
-                        <input type="number" required class="form-control @error('beds_number') is-invalid @enderror"
+                        <input type="number" min="1" max="50" required class="form-control @error('beds_number') is-invalid @enderror"
                             id="beds_number" name="beds_number" value="{{ old('beds_number') }}">
                     </div>
                     @error('beds_number')
@@ -84,7 +84,7 @@
 
                     <div class="mb-3">
                         <label for="bathrooms_number" class="form-label">Numero di Bagni</label>
-                        <input type="number" required class="form-control @error('bathrooms_number') is-invalid @enderror"
+                        <input type="number" min="1" max="50" required class="form-control @error('bathrooms_number') is-invalid @enderror"
                             id="bathrooms_number" name="bathrooms_number" value="{{ old('bathrooms_number') }}">
                     </div>
                     @error('bathrooms_number')
