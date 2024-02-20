@@ -28,7 +28,7 @@
 
                     <div class="mb-3">
                         <label for="price" class="form-label">Prezzo</label>
-                        <input type="number" required step=".01"
+                        <input type="number" required step=".1"
                             class="form-control @error('price') is-invalid @enderror" id="price" name="price"
                             value="{{ old('price') }}">
                     </div>
@@ -109,8 +109,8 @@
                     @enderror
 
                     <div class="mb-3">
-                        <label for="cover_image" class="form-label">Immagine</label>
-                        <input class="form-control" type="file" multiple id="cover_image" name="cover_image[]" value="{{ old('cover_image') }}">
+                        <label for="images" class="form-label">Immagini</label>
+                        <input class="form-control" type="file" multiple id="images" name="images[]" value="{{ old('images') }}">
                         <p class="alert alert-warning p-2 mt-2">Per selezionare più file, tenere premuto il tasto Ctrl (o Cmd su Mac) mentre si selezionano i file.</p>
                     </div>
 
