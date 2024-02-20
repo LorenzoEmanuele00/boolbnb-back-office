@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header red-bg">{{ __('Confirm Password') }}</div>
+                <div class="card-header text-light red-bg">{{ __('Confirm Password') }}</div>
 
                 <div class="card-body">
                     {{ __('Please confirm your password before continuing.') }}
@@ -29,7 +29,7 @@
 
                         <div class="mb-4 row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn red-bg">
+                                <button type="submit" class="btn btn-outline-danger text-light red-bg">
                                     {{ __('Confirm Password') }}
                                 </button>
 
