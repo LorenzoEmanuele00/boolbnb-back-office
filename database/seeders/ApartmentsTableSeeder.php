@@ -19,13 +19,13 @@ class ApartmentsTableSeeder extends Seeder
     public function run(Faker $faker)
     {
         $address        = ['Milano', 'Torino', 'Roma', 'Londra', 'New York', 'Tokyo'];
-        $apartmentNames = ['Luxury House', 'Real Luxury House', 'Simple House'];
+        $apartmentNames = ['Luxury House', 'Real Luxury House', 'Simple House', 'Big House', 'Small House', 'Chalet', 'Bay', 'Sea House', 'Beautyfull House', 'Hotel'];
 
         
         for ($i=0; $i < 10; $i++) { 
             $apartment = new Apartment();
             $apartment->user_id = $faker->numberBetween(1, 5);
-            $apartment->title = $faker->randomElement($apartmentNames);
+            $apartment->title = $apartmentNames[$i];
             $apartment->slug = Str::slug($apartment->title);
             $apartment->address = $faker->randomElement($address);
             $lat_lon = $this->getCoordinatesFromAddress($apartment->address);

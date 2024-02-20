@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('tier');
             $table->decimal('price');
-            $table->tinyInteger('duration');
+            $table->tinyInteger('duration')->unsigned();
             $table->timestamps();
         });
     }
