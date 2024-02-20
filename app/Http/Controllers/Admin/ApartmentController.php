@@ -8,6 +8,7 @@ use App\Models\Apartment;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Image;
 
 class ApartmentController extends Controller
 {
@@ -51,6 +52,16 @@ class ApartmentController extends Controller
         $apartment->user_id   = Auth::id();
 
         $apartment->save();
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('public/apartament_images');
+                $image = new Image();
+                $image->image_path = $path;
+                $apartment->image()->save($image);
+            }
+        }
+        
         return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug]);
     }
 
