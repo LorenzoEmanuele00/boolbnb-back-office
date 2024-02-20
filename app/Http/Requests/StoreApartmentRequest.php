@@ -25,7 +25,7 @@ class StoreApartmentRequest extends FormRequest
     {
         return [
             'title'            => ['required', 'min:5', 'max:150', 'unique:apartments'],
-            'price'            => ['required', 'numeric', 'decimal:0, 2', 'digits_between:1, 8'],
+            'price'            => ['required', 'numeric', 'decimal:0, 2'],
             'address'          => ['required'],
             'dimension_mq'     => ['required', 'numeric'],
             'rooms_number'     => ['required', 'numeric'],
