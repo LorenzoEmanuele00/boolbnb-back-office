@@ -26,7 +26,7 @@
 <body>
     <div id="app">
 
-        <header class="navbar navbar-dark sticky-top flex-md-nowrap p-2 shadow blue-bg">
+        <header class="navbar navbar-dark sticky-top shadow blue-bg">
             <div class="container">
                 
                 <a class="navbar-brand d-flex align-items-center px-2 m-0" href="{{ url('/') }}">
@@ -62,12 +62,12 @@
                 <!-- Definire solo parte del menu di navigazione inizialmente per poi
         aggiungere i link necessari giorno per giorno
         -->
-                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light navbar-dark sidebar collapse">
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block gray-bg navbar-dark sidebar collapse">
                     <div class="position-sticky pt-3">
                         <ul class="nav flex-column">
 
                             <li class="nav-item mb-2 disappear-768">
-                                    <a class="nav-link text-light red-bg border rounded-pill" href="{{ route('logout') }}"
+                                    <a class="nav-link red-hover border rounded-pill" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                                     <i class="fa-solid fa-circle-xmark"></i>
@@ -79,14 +79,14 @@
                             </li>
 
                             <li class="nav-item mb-2">
-                                <a class="nav-link {{ Route::currentRouteName() == 'admin.dashboard' ? 'red-bg border rounded-pill text-white' : 'text-dark' }}"
+                                <a class="nav-link {{ Route::currentRouteName() == 'admin.dashboard' ? 'red-bg border rounded-pill text-white' : 'red-hover border rounded-pill' }}"
                                     href="{{ route('admin.dashboard') }}">
                                     <i class="fa-solid fa-list"></i> DashBoard
                                 </a>
                             </li>
 
                             <li class="nav-item mb-2">
-                                <a class="nav-link {{ Route::currentRouteName() == 'admin.apartments.index' ? 'red-bg border rounded-pill text-white' : 'text-dark' }}"
+                                <a class="nav-link {{ Route::currentRouteName() == 'admin.apartments.index' ? 'red-bg border rounded-pill text-white' : 'red-hover border rounded-pill' }}"
                                     href="{{ route('admin.apartments.index') }}"> 
                                     {{-- mettere admin index qua sopra --}}
                                     <i class="fa-solid fa-house"></i> I tuoi Appartamenti
