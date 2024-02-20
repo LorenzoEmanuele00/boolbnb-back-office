@@ -13,7 +13,7 @@
                     <p>{{ $apartment->rooms_number }} camere da letto - {{ $apartment->beds_number }} letti -
                         {{ $apartment->bathrooms_number }} bagni</p>
                         <div class="mt-4">
-                            <a href="{{ url()->previous() }}" class="btn btn-primary">
+                            <a href="{{ route('admin.apartments.index') }}" class="btn btn-primary">
                                 <i class="fas fa-arrow-left"></i> Torna Indietro
                             </a>
                         </div>

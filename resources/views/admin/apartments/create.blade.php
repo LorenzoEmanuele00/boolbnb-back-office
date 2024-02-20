@@ -28,7 +28,7 @@
 
                     <div class="mb-3">
                         <label for="price" class="form-label">Prezzo</label>
-                        <input type="number" required step=".1"
+                        <input type="number" required step=".01"
                             class="form-control @error('price') is-invalid @enderror" id="price" name="price"
                             value="{{ old('price') }}">
                     </div>
