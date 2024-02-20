@@ -18,21 +18,24 @@ class ApartmentsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        $address        = ['Milano', 'Torino', 'Roma', 'Londra', 'New York', 'Tokyo'];
+        $apartmentNames = ['Luxury House', 'Real Luxury House', 'Simple House'];
+
         
         for ($i=0; $i < 10; $i++) { 
             $apartment = new Apartment();
             $apartment->user_id = $faker->numberBetween(1, 5);
-            $apartment->title = $faker->sentence(5);
+            $apartment->title = $faker->randomElement($apartmentNames);
             $apartment->slug = Str::slug($apartment->title);
-            $apartment->address = $faker->address();
+            $apartment->address = $faker->randomElement($address);
             $lat_lon = $this->getCoordinatesFromAddress($apartment->address);
             $apartment->latitude = $lat_lon['coordinates']['lat'];
             $apartment->longitude = $lat_lon['coordinates']['lon'];
-            $apartment->price = $faker->randomFloat(2, 1, 99999);
-            $apartment->dimension_mq = $faker->numberBetween(0, 65534);
-            $apartment->rooms_number = $faker->numberBetween(2, 100);
-            $apartment->beds_number = $faker->numberBetween(1, 100);
-            $apartment->bathrooms_number = $faker->numberBetween(1, 100);
+            $apartment->price = $faker->randomFloat(2, 1, 1999);
+            $apartment->dimension_mq = $faker->numberBetween(0, 500);
+            $apartment->rooms_number = $faker->numberBetween(2, 20);
+            $apartment->beds_number = $faker->numberBetween(1, 10);
+            $apartment->bathrooms_number = $faker->numberBetween(1, 10);
             $apartment->is_visible = $faker->numberBetween(0, 1);
 
             $apartment->save();
