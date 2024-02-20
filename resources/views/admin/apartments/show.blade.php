@@ -10,13 +10,23 @@
                     <p class="mb-4 text-muted">({{ $apartment->latitude }} , {{ $apartment->longitude }})</p>
                     <p>Prezzo: <span class="text-danger">{{ $apartment->price }}$</span></p>
                     <p>Dimensione: <span class="text-primary">{{ $apartment->dimension_mq }} mq</span></p>
-                    <p>{{ $apartment->rooms_number }} camere da letto - {{ $apartment->beds_number }} letti -
-                        {{ $apartment->bathrooms_number }} bagni</p>
-                        <div class="mt-4">
-                            <a href="{{ route('admin.apartments.index') }}" class="btn btn-primary">
-                                <i class="fas fa-arrow-left"></i> Torna Indietro
-                            </a>
+                    <p>{{ $apartment->rooms_number }} camere da letto - {{ $apartment->beds_number }} letti - {{ $apartment->bathrooms_number }} bagni</p>
+                    
+                    @if ($apartment->images)
+                        <div class="d-flex">
+                            @foreach ($apartment->images as $image)
+                            <img class="w-25 py-4 m-auto" src="{{ asset('storage/' . $image->image_path) }}" alt="">
+                            @endforeach
                         </div>
+                    @else
+                        <p>Nessuna immagine presente</p>
+                    @endif
+
+                    <div class="mt-4">
+                        <a href="{{ route('admin.apartments.index') }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-left"></i> Torna Indietro
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
