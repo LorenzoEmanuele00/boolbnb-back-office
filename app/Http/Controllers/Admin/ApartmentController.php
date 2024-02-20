@@ -58,7 +58,7 @@ class ApartmentController extends Controller
                 $path = $image->store('public/apartament_images');
                 $image = new Image();
                 $image->image_path = $path;
-                $apartment->image()->save($image);
+                $apartment->images()->save($image);
             }
         }
         
