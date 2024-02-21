@@ -32,9 +32,7 @@
                     
                 </a>
 
-                <button class="navbar-toggler text-light bg-light" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler text-light bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#dropdown-welcome" aria-expanded="false" aria-controls="dropdown-welcome">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -59,7 +57,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown appear-768">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Bentornato/a {{ Auth::user()->name }}
@@ -83,6 +81,41 @@
                 </div>
             </div>
         </nav>
+
+        <div id="dropdown-welcome" class="disappear-768 collapse">
+            <ul class="nav flex-column">
+                @guest
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Bentornato/a {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ url('admin') }}   ">{{ __('Dashboard') }}</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                @endguest
+            </ul>
+        </div>
 
         <main class="">
             @yield('content')
