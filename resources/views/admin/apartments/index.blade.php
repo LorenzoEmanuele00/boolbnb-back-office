@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container">
+        @if(session('message'))
+            <div class="alert alert-danger my-2">
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="text-end my-4">
             <a class="btn btn-success" href="{{route('admin.apartments.create')}}">Crea nuovo appartamento</a>
         </div>
