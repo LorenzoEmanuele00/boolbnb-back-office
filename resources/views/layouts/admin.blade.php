@@ -49,7 +49,7 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ url('admin') }}">{{ __('Account') }}</a>
+                    <a class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#user-info-popup" aria-expanded="false" aria-controls="user-info-popup">{{ __('Account') }}</a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
@@ -74,9 +74,7 @@
                         <ul class="nav flex-column">
 
                             <li class="nav-item mb-2 disappear-768">
-                                <a class="nav-link red-hover border rounded-pill" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
+                                <a class="nav-link red-hover border rounded-pill" data-bs-toggle="collapse" data-bs-target="#user-info-popup" aria-expanded="false" aria-controls="user-info-popup">
                                 <i class="fa-solid fa-user"></i>
                                 Account di {{ Auth::user()->name }}
                                 </a>
@@ -116,6 +114,10 @@
 
                     </div>
                 </nav>
+
+                {{-- <div id="user-info-popup">
+                    
+                </div> --}}
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     @yield('content')
