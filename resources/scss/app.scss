@@ -7,6 +7,11 @@
     --lightred-color: rgb(243, 28, 25, 0.6);
 }
 
+body{
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
 .blue-bg{
     background-color: var(--blue-color);
 }
@@ -52,6 +57,38 @@ a{
     display: none;
 }
 
+
+
+#user-info-popup{
+    background-color: rgb(130, 130, 130, 0.3);
+    width: 100vw;
+    height: calc(100vh + 6rem);
+    z-index: 9998;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    
+    #popup-block{
+        background-color: white;
+        box-shadow: 0 0 10px 5px rgb(0, 0, 0, 0.5);
+        padding: 0 1rem;
+        width: 20rem;
+        height: 20rem;
+        z-index: 9999;
+        position: absolute;
+        top: 40vh;
+        right: 30vw;
+        
+        i{
+            position: relative;
+            top: 0.5rem;
+            left: 17rem;
+            color: red;
+        }
+    }
+}
+
 @media screen and (min-width: 768px) {
     .appear-768{
         display: inline-block;
@@ -60,11 +97,10 @@ a{
     .disappear-768{
         display: none;
     }
-}
 
-/*
-.index_btn {
-    width: 60px;
-    color: white;
+    #user-info-popup{
+        #popup-block{
+            right: 40vw;
+        } 
+    }
 }
-*/

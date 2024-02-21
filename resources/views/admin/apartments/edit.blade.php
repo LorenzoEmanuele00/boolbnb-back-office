@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="mt-4">
-            <a href="{{ url()->previous() }}" class="btn btn-secondary">
+            <a href="{{ route('admin.apartments.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Torna Indietro
             </a>
         </div>
@@ -114,8 +114,7 @@
                     <div class="mb-3">
                         <label for="is_visible">Disponibilità</label>
                         <select class="form-select" required name="is_visible" id="is_visible">
-                            <option @selected(!old('is_visible')) value="">Nessuna tipologia</option>
-                            <option @selected(old('is_visible', $apartment->is_visible) === 1) value="1">Disponibile</option>
+                            <option @selected(!old('is_visible', $apartment->is_visible) === 1) value="1">Disponibile</option>
                             <option @selected(old('is_visible', $apartment->is_visible) === 0) value="0">Non Disponibile</option>
                         </select>
                     </div>
@@ -129,12 +128,15 @@
                     <div class="mb-3">
                         <div class="row row-cols-4">
                             @foreach ($images as $image)
-                                <div class="col d-flex justify-content-center flex-wrap">
+                                <div class="col d-flex justify-content-center flex-wrap align-items-end">
                                     <div>
-                                        <img class="w-100 flex-grow-1" style="width: 18rem;"
+                                        <img class="w-100 flex-grow-1"
                                             src="{{ asset('storage/' . $image->image_path) }}" alt="">
                                     </div>
-                                    <input class="p-2" type="checkbox" name="image_to_delete[]" value="{{ $image->id }}">  Elimina
+                                    <div class="d-flex py-1">
+                                        <label for="{{ $image->id }}" class="px-2">Elimina</label>
+                                        <input class="px-2" type="checkbox" name="image_to_delete[]" value="{{ $image->id }}" id="{{ $image->id }}">  
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
