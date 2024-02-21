@@ -114,8 +114,7 @@
                     <div class="mb-3">
                         <label for="is_visible">Disponibilità</label>
                         <select class="form-select" required name="is_visible" id="is_visible">
-                            <option @selected(!old('is_visible')) value="">Nessuna tipologia</option>
-                            <option @selected(old('is_visible', $apartment->is_visible) === 1) value="1">Disponibile</option>
+                            <option @selected(!old('is_visible', $apartment->is_visible) === 1) value="1">Disponibile</option>
                             <option @selected(old('is_visible', $apartment->is_visible) === 0) value="0">Non Disponibile</option>
                         </select>
                     </div>

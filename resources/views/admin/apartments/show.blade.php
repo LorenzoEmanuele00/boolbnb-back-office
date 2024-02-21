@@ -12,16 +12,18 @@
                     <p>Dimensione: <span class="text-primary">{{ $apartment->dimension_mq }} mq</span></p>
                     <p>{{ $apartment->rooms_number }} camere da letto - {{ $apartment->beds_number }} letti - {{ $apartment->bathrooms_number }} bagni</p>
 
-                    <p>
-                        Servizi disponibili:
-                        <div>
-                            @foreach ($apartment->services as $service)
-                                <span class="badge border text-dark">
-                                    <i class="{{ $service->icon }}"></i>  {{ $service->name }}
-                                </span>
-                            @endforeach
-                        </div>
-                    </p>
+                    @if (count($apartment->services) > 0)
+                        <p>
+                            Servizi disponibili:
+                            <div>
+                                @foreach ($apartment->services as $service)
+                                    <span class="badge border text-dark">
+                                        <i class="{{ $service->icon }}"></i>  {{ $service->name }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        </p>
+                    @endif
                     
                     @if ($apartment->images)
                         <div class="d-flex">
