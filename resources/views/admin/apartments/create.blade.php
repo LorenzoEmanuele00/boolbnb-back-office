@@ -2,13 +2,6 @@
 
 @section('content')
     <div class="container">
-
-        @if(Session::has('message'))
-            <p class="alert
-                {{ Session::get('alert-class', 'alert-info') }}">{{Session::get('message') }}
-            </p>
-        @endif
-
         <div class="mt-4">
             <a href="{{ route('admin.apartments.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Torna Indietro
@@ -55,6 +48,11 @@
                             <div>{{ $message }}</div>
                         </div>
                     @enderror
+                    @if(Session::has('message'))
+                        <p class="alert 
+                            {{ Session::get('alert-class', 'alert-danger') }}">{{Session::get('message') }}
+                        </p>
+                    @endif
 
                     <div class="mb-3">
                         <label for="dimension_mq" class="form-label">Dimensione m²</label>
