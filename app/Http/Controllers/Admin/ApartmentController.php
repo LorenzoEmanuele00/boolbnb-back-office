@@ -80,7 +80,11 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view('admin.apartments.show', compact('apartment'));
+        if($apartment->user_id === Auth::user()->id) {
+            return view('admin.apartments.show', compact('apartment'));
+        } else {
+            return view('admin.apartments.error404');
+        }
     }
 
     /**
