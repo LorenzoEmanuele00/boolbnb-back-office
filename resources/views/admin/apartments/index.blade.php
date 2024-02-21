@@ -36,13 +36,14 @@
                                 <form action="{{ route('admin.apartments.destroy', ['apartment' => $apartment->slug]) }}" class="d-inline-block" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger" style="width: 40px" type="submit"><i class="fa-regular fa-trash-can"></i></button>
+                                    <button class="btn btn-danger btn-delete" style="width: 40px" type="submit" data-title="{{ $apartment->title }}"><i class="fa-regular fa-trash-can"></i></button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            @include('partials.delete_modal')
         @else
             <h2 class="py-2">Inserisci qui i tuoi Appartamenti</h2>
         @endif
