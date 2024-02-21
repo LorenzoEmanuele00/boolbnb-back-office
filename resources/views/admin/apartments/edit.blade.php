@@ -115,12 +115,20 @@
                     @enderror
 
                     <div class="mb-3">
-                        @foreach ($images as $image)
-                            <img class="w-25 h-25 py-4 m-auto" style="width: 18rem;" src="{{ asset($image->image_path) }}"
-                                alt="">
-                            <input type="checkbox" name="image_to_delete[]" value="{{ $image->id }}"> Elimina
-                        @endforeach
+                        <div class="row row-cols-4">
+                            @foreach ($images as $image)
+                                <div class="col d-flex justify-content-center flex-wrap">
+                                    <div>
+                                        <img class="w-100 flex-grow-1" style="width: 18rem;"
+                                            src="{{ asset('storage/' . $image->image_path) }}" alt="">
+                                    </div>
+                                    <input class="p-2" type="checkbox" name="image_to_delete[]" value="{{ $image->id }}">  Elimina
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
 
+                    <div class="mb-3">
                         <input type="file" name="new_image[]" multiple>
                     </div>
 
