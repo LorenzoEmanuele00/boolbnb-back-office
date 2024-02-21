@@ -41,14 +41,21 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            
-            <div class="navbar-nav appear-768">
-                <div class="nav-item text-nowrap ms-2">
-                    <a class="nav-link text-light" href="{{ route('logout') }}"
+
+            <div class="nav-item dropdown appear-768">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    Bentornato/a {{ Auth::user()->name }}
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url('admin') }}">{{ __('Account') }}</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
+                                     document.getElementById('logout-form').submit();">
                         {{ __('Esci') }}
                     </a>
+
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
@@ -65,6 +72,18 @@
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block gray-bg navbar-dark sidebar collapse">
                     <div class="position-sticky pt-3">
                         <ul class="nav flex-column">
+
+                            <li class="nav-item mb-2 disappear-768">
+                                <a class="nav-link red-hover border rounded-pill" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                <i class="fa-solid fa-user"></i>
+                                Account di {{ Auth::user()->name }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                        </li>
 
                             <li class="nav-item mb-2 disappear-768">
                                     <a class="nav-link red-hover border rounded-pill" href="{{ route('logout') }}"
