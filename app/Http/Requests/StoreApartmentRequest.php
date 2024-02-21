@@ -27,10 +27,10 @@ class StoreApartmentRequest extends FormRequest
             'title'            => ['required', 'min:5', 'max:150', 'unique:apartments'],
             'price'            => ['required', 'numeric', 'decimal:0, 2'],
             'address'          => ['required'],
-            'dimension_mq'     => ['required', 'numeric'],
-            'rooms_number'     => ['required', 'numeric'],
-            'beds_number'      => ['required', 'numeric'],
-            'bathrooms_number' => ['required', 'numeric'],
+            'dimension_mq'     => ['required', 'numeric', 'min:1', 'max:500'],
+            'rooms_number'     => ['required', 'numeric', 'min:1', 'max:50'],
+            'beds_number'      => ['required', 'numeric', 'min:1', 'max:50'],
+            'bathrooms_number' => ['required', 'numeric', 'min:1', 'max:50'],
             'is_visible'       => ['required']
         ];
     }
