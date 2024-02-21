@@ -47,7 +47,7 @@ class ApartmentController extends Controller
         $apartment->fill($form_data);
 
         $lat_lon = $this->getCoordinatesFromAddress($apartment->address);
-        if($lat_lon['coordinates'] == 'error'){
+        if($lat_lon['coordinates'] == 'errore'){
             return back()->withInput()->with('message', "L'indirizzo inserito non e' valito. Inserire indirizzo esistente.");
         } else {
             $apartment->longitude = $lat_lon['coordinates']['lon'];
