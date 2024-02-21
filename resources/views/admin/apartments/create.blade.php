@@ -35,7 +35,7 @@
 
                     <div class="mb-3">
                         <label for="price" class="form-label">Prezzo</label>
-                        <input type="number" required step=".1"
+                        <input type="number" required step=".01"
                             class="form-control @error('price') is-invalid @enderror" id="price" name="price"
                             value="{{ old('price') }}">
                     </div>
@@ -103,8 +103,7 @@
                     <div class="mb-3">
                         <label for="is_visible">Disponibilità</label>
                         <select class="form-select" required name="is_visible" id="is_visible">
-                            <option @selected(!old('is_visible')) value="">Nessuna tipologia</option>
-                            <option @selected(old('is_visible') === 1) value="1">Disponibile</option>
+                            <option @selected(!old('is_visible') === 1) value="1">Disponibile</option>
                             <option @selected(old('is_visible') === 0) value="0">Non Disponibile</option>
                         </select>
                     </div>
