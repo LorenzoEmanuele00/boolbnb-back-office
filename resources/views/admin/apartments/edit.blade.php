@@ -100,6 +100,18 @@
                     @enderror
 
                     <div class="mb-3">
+                        Seleziona i servizi disponibili:
+                        @foreach($services as $service)
+                            <div class="form-check">
+                                <input @checked($errors->any() ? in_array($service->id, old('services', [])) : $apartment->services->contains($service)) type="checkbox" id="service-{{ $service->id }}" value="{{ $service->id }}" name="services[]">
+                                <label for="service-{{ $service->id }}">
+                                    {{ $service->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="mb-3">
                         <label for="is_visible">Disponibilità</label>
                         <select class="form-select" required name="is_visible" id="is_visible">
                             <option @selected(!old('is_visible')) value="">Nessuna tipologia</option>
@@ -116,7 +128,7 @@
 
                     <div class="mb-3">
                         @foreach ($images as $image)
-                            <img class="w-25 h-25 py-4 m-auto" style="width: 18rem;" src="{{ asset($image->image_path) }}"
+                            <img class="w-25 h-25 py-4 m-auto" style="width: 18rem;" src="{{ asset('storage/' . $image->image_path) }}"
                                 alt="">
                             <input type="checkbox" name="image_to_delete[]" value="{{ $image->id }}"> Elimina
                         @endforeach
