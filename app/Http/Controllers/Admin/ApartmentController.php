@@ -47,6 +47,8 @@ class ApartmentController extends Controller
 
         $lat_lon = $this->getCoordinatesFromAddress($apartment->address);
         if($lat_lon['coordinates'] == 'error'){
+            return back()->withInput()->with('message', "L'indirizzo inserito non e' valito. Inserire indirizzo esistente.");
+        } else {
             $apartment->longitude = $lat_lon['coordinates']['lon'];
             $apartment->latitude  = $lat_lon['coordinates']['lat']; 
 
@@ -64,8 +66,6 @@ class ApartmentController extends Controller
             }
             
             return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug]);
-        } else {
-            return back()->withInput()->with('message', "L'indirizzo inserito non e' valito. Inserire indirizzo esistente.");
         }
         
 
