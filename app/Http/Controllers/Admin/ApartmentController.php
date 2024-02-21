@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Image;
+use App\Models\Service;
 use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
@@ -31,7 +32,8 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.apartments.create');
+        $services = Service::all();
+        return view('admin.apartments.create', compact ('services'));
     }
 
     /**
@@ -65,7 +67,7 @@ class ApartmentController extends Controller
                     $apartment->images()->save($image);
                 }
             }
-
+            
             return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug]);
         }
     }

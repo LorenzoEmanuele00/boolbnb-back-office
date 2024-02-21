@@ -101,6 +101,19 @@
                     @enderror
 
                     <div class="mb-3">
+                        Seleziona i servizi disponibili:
+                        @foreach($services as $service)
+                            <div class="form-check">
+                                <input @checked(in_array($service->id, old('services', []))) type="checkbox" id="service-{{ $service->id }}" value="{{ $service->id }}" name="services[]">
+                                <label for="service-{{ $service->id }}">
+                                    {{ $service->name }}
+                                </label>
+
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="mb-3">
                         <label for="is_visible">Disponibilità</label>
                         <select class="form-select" required name="is_visible" id="is_visible">
                             <option @selected(!old('is_visible') === 1) value="1">Disponibile</option>
