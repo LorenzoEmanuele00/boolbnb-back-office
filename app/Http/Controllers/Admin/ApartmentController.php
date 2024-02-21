@@ -67,6 +67,10 @@ class ApartmentController extends Controller
                     $apartment->images()->save($image);
                 }
             }
+
+            if($request->has('services')) {
+                $apartment->services()->attach($request->services);
+            }
             
             return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug]);
         }

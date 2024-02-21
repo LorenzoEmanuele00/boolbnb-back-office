@@ -116,7 +116,7 @@
 
                     <div class="mb-3">
                         @foreach ($images as $image)
-                            <img class="w-25 h-25 py-4 m-auto" style="width: 18rem;" src="{{ asset($image->image_path) }}"
+                            <img class="w-25 h-25 py-4 m-auto" style="width: 18rem;" src="{{ asset('storage/' . $image->image_path) }}"
                                 alt="">
                             <input type="checkbox" name="image_to_delete[]" value="{{ $image->id }}"> Elimina
                         @endforeach
