@@ -100,7 +100,8 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         $images = $apartment->images;
-        return view('admin.apartments.edit', compact('apartment', 'images'));
+        $services = Service::all();
+        return view('admin.apartments.edit', compact('apartment', 'images', 'services'));
     }
 
     /**
@@ -137,6 +138,12 @@ class ApartmentController extends Controller
             }
 
             $apartment->update($form_data);
+
+            if($request->has('services')) {
+                $apartment->services()->sync($request->services);
+            } else {
+                $apartment->services()->sync([]);
+            }
 
             return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug])->with('message', 'l\'appartamento é stato modificato con successo');
         }
