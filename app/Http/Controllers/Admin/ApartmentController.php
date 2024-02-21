@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -50,7 +51,7 @@ class ApartmentController extends Controller
             return back()->withInput()->with('message', "L'indirizzo inserito non e' valito. Inserire indirizzo esistente.");
         } else {
             $apartment->longitude = $lat_lon['coordinates']['lon'];
-            $apartment->latitude  = $lat_lon['coordinates']['lat']; 
+            $apartment->latitude  = $lat_lon['coordinates']['lat'];
 
             $apartment->user_id   = Auth::id();
 
@@ -58,18 +59,15 @@ class ApartmentController extends Controller
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
-                    $path = $image->store('public/apartament_images');
+                    $path = $image->store('public/apartment_images');
                     $image = new Image();
                     $image->image_path = $path;
                     $apartment->images()->save($image);
                 }
             }
-            
+
             return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug]);
         }
-        
-
-        
     }
 
     /**
@@ -93,9 +91,10 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Apartment $apartment)
     {
-        //
+        $images = $apartment->images;
+        return view('admin.apartments.edit', compact('apartment', 'images'));
     }
 
     /**
@@ -105,9 +104,36 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, Apartment $apartment)
+    { {
+            $form_data = $request->all();
+
+            $imageToDelete = $request->input('image_to_delete', []);
+
+            foreach ($imageToDelete as $imageId) {
+                
+                $image = Image::findOrFail($imageId);
+
+                Storage::delete($image->image_path);
+
+                $image->delete();
+            }
+
+            if ($request->hasFile('new_image')) {
+                foreach ($request->file('new_image') as $file) {
+                    
+                    $image_path = $file->store('public/apartment_images');
+
+                    $apartment->images()->create([
+                        'image_path' => $image_path
+                    ]);
+                }
+            }
+
+            $apartment->update($form_data);
+
+            return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug])->with('message', 'l\'appartamento é stato modificato con successo');
+        }
     }
 
     /**
@@ -122,18 +148,18 @@ class ApartmentController extends Controller
         return redirect()->route('admin.apartments.index')->with('message', 'Appartamento ' . $apartment->title . ' è stato cancellato');
     }
 
-    
+
     public static function getCoordinatesFromAddress(string $address)
     {
         $client = new Client(['verify' => false]);
         $addressEncode = $address;
-        $response = $client->get('https://api.tomtom.com/search/2/geocode/%27.'.$addressEncode.'.%27.json', [
+        $response = $client->get('https://api.tomtom.com/search/2/geocode/%27.' . $addressEncode . '.%27.json', [
             'query' => [
                 'key' => 'bZhPA555PRZ2tCDM2RaSbbHm4xg1LwVn',
                 'limit' => 1
             ]
         ]);
-        error_log(print_r($response,true));
+        error_log(print_r($response, true));
         $data = json_decode($response->getBody(), true);
 
         if (isset($data['results']) && count($data['results']) > 0) {
@@ -148,8 +174,8 @@ class ApartmentController extends Controller
             return $error;
         }
         // $coordinates = $data['results'][0]['position'];
-        
+
         // return compact('coordinates');
-              
+
     }
 }
