@@ -89,7 +89,8 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('admin.apartments.edit', compact('apartment'));
+        $images = $apartment->images;
+        return view('admin.apartments.edit', compact('apartment', 'images'));
     }
 
     /**
@@ -109,7 +110,7 @@ class ApartmentController extends Controller
                 
                 $image = Image::findOrFail($imageId);
 
-                Storage::delete($image->path);
+                Storage::delete($image->image_path);
 
                 $image->delete();
             }
@@ -117,17 +118,17 @@ class ApartmentController extends Controller
             if ($request->hasFile('new_image')) {
                 foreach ($request->file('new_image') as $file) {
                     
-                    $path = $file->store('public/apartment_images');
+                    $image_path = $file->store('public/apartment_images');
 
                     $apartment->images()->create([
-                        'path' => $path
+                        'image_path' => $image_path
                     ]);
                 }
             }
 
             $apartment->update($form_data);
 
-            return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug])->with('message', 'il messaggio é stato modificato con successo');
+            return redirect()->route('admin.apartments.show', ['apartment' => $apartment->slug])->with('message', 'l\'appartamento é stato modificato con successo');
         }
     }
 
