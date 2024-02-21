@@ -10,7 +10,7 @@
         @endif
 
         <div class="mt-4">
-            <a href="{{ url()->previous() }}" class="btn btn-secondary">
+            <a href="{{ route('admin.apartments.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Torna Indietro
             </a>
         </div>
