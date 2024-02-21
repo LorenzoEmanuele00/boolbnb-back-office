@@ -2,6 +2,13 @@
 
 @section('content')
     <div class="container">
+
+        @if(Session::has('message'))
+            <p class="alert
+                {{ Session::get('alert-class', 'alert-info') }}">{{Session::get('message') }}
+            </p>
+        @endif
+
         <div class="mt-4">
             <a href="{{ url()->previous() }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Torna Indietro
@@ -51,7 +58,7 @@
 
                     <div class="mb-3">
                         <label for="dimension_mq" class="form-label">Dimensione m²</label>
-                        <input type="number" min="1" max="2000" required class="form-control @error('dimension_mq') is-invalid @enderror"
+                        <input type="number" min="1" max="500" required class="form-control @error('dimension_mq') is-invalid @enderror"
                             id="dimension_mq" name="dimension_mq" value="{{ old('dimension_mq') }}">
                     </div>
                     @error('dimension_mq')
@@ -97,8 +104,8 @@
                         <label for="is_visible">Disponibilità</label>
                         <select class="form-select" required name="is_visible" id="is_visible">
                             <option @selected(!old('is_visible')) value="">Nessuna tipologia</option>
-                            <option @selected(old('is_visible') === 0) value="0">Disponibile</option>
-                            <option @selected(old('is_visible') === 1) value="1">Non Disponibile</option>
+                            <option @selected(old('is_visible') === 1) value="1">Disponibile</option>
+                            <option @selected(old('is_visible') === 0) value="0">Non Disponibile</option>
                         </select>
                     </div>
 
