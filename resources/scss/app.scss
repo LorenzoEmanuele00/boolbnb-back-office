@@ -4,14 +4,32 @@
     --blue-color: #001632;
     --red-color: #F31C19;
     --gray-color: #f8f9fa;
+    --lightred-color: rgb(243, 28, 25, 0.6);
 }
 
 .blue-bg{
     background-color: var(--blue-color);
 }
 
+header.blue-bg,
+nav.blue-bg{
+    height: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
 .red-bg{
     background-color: var(--red-color);
+}
+
+.rounded-pill{
+    color: black;
+}
+
+.red-hover:hover{
+    background-color: var(--lightred-color);
+    color: white;
 }
 
 .red-font{
@@ -38,8 +56,15 @@ a{
     .appear-768{
         display: inline-block;
     }
-    
+
     .disappear-768{
         display: none;
     }
 }
+
+/*
+.index_btn {
+    width: 60px;
+    color: white;
+}
+*/
