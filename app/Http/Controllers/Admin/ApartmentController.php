@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Image;
+use App\Models\Lead;
 use App\Models\Service;
 use Illuminate\Support\Facades\Storage;
 
@@ -85,8 +86,10 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        
         if($apartment->user_id === Auth::user()->id) {
-            return view('admin.apartments.show', compact('apartment'));
+            $leads = Lead::where('apartment_id', $apartment->id)->get();
+            return view('admin.apartments.show', compact('apartment', 'leads'));
         } else {
             return view('admin.apartments.error404');
         }
