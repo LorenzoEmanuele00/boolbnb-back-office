@@ -35,10 +35,29 @@
                         <p>Nessuna immagine presente</p>
                     @endif
 
-                    <div class="mt-4">
-                        <a href="{{ route('admin.apartments.index') }}" class="btn btn-primary">
-                            <i class="fas fa-arrow-left"></i> Torna Indietro
-                        </a>
+                    <div class="container">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Cognome</th>
+                                    <th scope="col">Leggi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($leads as $lead)
+                                    <tr>
+                                        <th scope="row">{{$lead->first_name}}</th>
+                                        <td>
+                                            {{$lead->last_name}}
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary" style="width: 40px" href="{{ route('admin.leads.show', ['lead' => $lead->id]) }}"><i class="fa-solid fa-info"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
