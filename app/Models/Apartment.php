@@ -5,11 +5,14 @@ namespace App\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Apartment extends Model
 {
     use HasFactory;
+
+    use SoftDeletes;
 
     public $fillable = ['title', 'slug', 'price', 'address', 'latitude', 'longitude', 'dimension_mq', 'rooms_number', 'beds_number', 'bathrooms_number', 'is_visible'];
 
