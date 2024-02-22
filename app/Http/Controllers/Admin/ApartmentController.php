@@ -20,7 +20,7 @@ class ApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $apartments = Apartment::where('user_id', '=', Auth::user()->id)->get();
         return view('admin.apartments.index', compact('apartments'));
@@ -158,8 +158,18 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
+        $this->checkUser($apartment);
+
         $apartment -> delete();
+        // Storage::delete($apartment->image_path);
+
         return redirect()->route('admin.apartments.index')->with('message', 'Appartamento ' . $apartment->title . ' è stato cancellato');
+    }
+
+    public function checkUser(Apartment $apartment){
+        if($apartment->user_id !== Auth::user()->id) {
+            abort(404);
+        }
     }
 
 
