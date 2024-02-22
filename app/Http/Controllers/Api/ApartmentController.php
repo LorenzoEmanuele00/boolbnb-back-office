@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $apartments = Apartment::with('images')->paginate(10);
 
         return response()->json([
@@ -16,5 +17,26 @@ class ApartmentController extends Controller
             'success' => true
         ]);
     }
+
+    public function show(string $slug)
+    {
+
+        $apartment = Apartment::with('images', 'services')->where('slug', $slug)->first();
+
+        if($apartment) {
+            return response()->json([
+                'results' => $apartment,
+                'success' => true 
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nessun appartamento trovato'
+            ]);
+        }
+
+    }
+
+    
 
 }
