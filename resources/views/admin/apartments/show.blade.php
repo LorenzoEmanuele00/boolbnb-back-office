@@ -34,31 +34,29 @@
                     @else
                         <p>Nessuna immagine presente</p>
                     @endif
-
-                    <div class="container">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Cognome</th>
-                                    <th scope="col">Leggi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($leads as $lead)
+                    @if (count($leads) > 0)
+                        <div class="container w-50 py-2">
+                            <h4 class="py-2">I Tuoi Messaggi</h4>
+                            <table class="table table-striped border border-2">
+                                <thead>
                                     <tr>
-                                        <th scope="row">{{$lead->first_name}}</th>
-                                        <td>
-                                            {{$lead->last_name}}
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary" style="width: 40px" href="{{ route('admin.leads.show', ['lead' => $lead->id]) }}"><i class="fa-solid fa-info"></i></a>
-                                        </td>
+                                        <th scope="col">Mittente</th>
+                                        <th scope="col">Leggi</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    @foreach ($leads as $lead)
+                                        <tr>
+                                            <td>{{$lead->first_name}} {{$lead->last_name}}</td>
+                                            <td>
+                                                <a class="btn btn-primary" style="width: 40px" href="{{ route('admin.leads.show', ['lead' => $lead->id]) }}"><i class="fa-solid fa-message"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
