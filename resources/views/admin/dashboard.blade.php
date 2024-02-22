@@ -20,19 +20,6 @@
             </div>
         </div>
 
-        <div class="collapse" id="user-info-popup">
-            <div id="popup-block">
-                <a class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#user-info-popup" aria-expanded="false" aria-controls="user-info-popup"><i class="fa-solid fa-circle-xmark"></i></a>
 
-            <div>
-                <h5>Nome:</h5>
-                <span>{{ Auth::user()->name }}</span>
-            </div>
-            <div>
-                <h5>E-mail:</h5>
-                <span>{{ Auth::user()->email }}</span>
-            </div>
-            </div>
-        </div>
     </div>
 @endsection
