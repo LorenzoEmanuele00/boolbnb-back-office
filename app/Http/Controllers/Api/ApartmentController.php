@@ -4,17 +4,36 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 
+
 class ApartmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $apartments = Apartment::with('images')->paginate(10);
+        $apartmentQuery = Apartment::with('images');
+
+        if($request->has('address')){
+            
+            $lat_lon = $this->getCoordinatesFromAddress($request->address);
+            if($lat_lon['coordinates'] == 'errore'){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Nessun appartamento trovato'
+                ]);
+            }else {
+                 $finalQuery = $this->scopeDistance($apartmentQuery, $lat_lon['coordinates']['lat'], $lat_lon['coordinates']['lon']);
+            }
+           
+            
+        }
+
+        $finalQuery = $apartmentQuery->paginate(10);
 
         return response()->json([
-            'results' => $apartments,
+            'results' => $finalQuery,
             'success' => true
         ]);
     }
@@ -36,6 +55,46 @@ class ApartmentController extends Controller
             ]);
         }
 
+    }
+
+    public static function getCoordinatesFromAddress(string $address)
+    {
+        $client = new Client(['verify' => false]);
+        $addressEncode = $address;
+        $response = $client->get('https://api.tomtom.com/search/2/geocode/%27.' . $addressEncode . '.%27.json', [
+            'query' => [
+                // 'key' => 'bZhPA555PRZ2tCDM2RaSbbHm4xg1LwVn',
+                'key' => '0Uo0D3xj0wcPYB8W6Ybk5SuoiIJK1I1M',
+                'limit' => 1
+            ]
+        ]);
+        error_log(print_r($response, true));
+        $data = json_decode($response->getBody(), true);
+
+        if (isset($data['results']) && count($data['results']) > 0) {
+            $coordinates = $data['results'][0]['position'];
+            return compact('coordinates');
+        } else {
+            $error = [
+                'error'       => 'Indirizzo non trovato',
+                'coordinates' => 'errore'
+            ];
+            return $error;
+        }
+
+    }
+
+    public function scopeDistance($query, $from_latitude, $from_longitude, $distance = 20)
+    {
+        $between_coords = Apartment::calcCoordinates($from_longitude, $from_latitude, $distance);
+
+        return $query
+            ->where(function ($q) use ($between_coords) {
+                $q->whereBetween('apartments.longitude', [$between_coords['min']['lng'], $between_coords['max']['lng']]);
+            })
+            ->where(function ($q) use ($between_coords) {
+                $q->whereBetween('apartments.latitude', [$between_coords['min']['lat'], $between_coords['max']['lat']]);
+            });
     }
 
     // public function searchFilter(Request $request) 
