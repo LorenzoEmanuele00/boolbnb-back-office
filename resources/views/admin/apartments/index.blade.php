@@ -10,6 +10,12 @@
         <div class="text-end my-4">
             <a class="btn btn-success" href="{{route('admin.apartments.create')}}">Crea nuovo appartamento</a>
         </div>
+
+        {{-- <form action="{{route('apartments.search')}}" method="GET">
+            <input type="text" name="search" placeholder="Search Products">
+            <button type="submit">Cerca...</button>
+        </form> --}}
+
         @if (count($apartments) > 0)
             <table class="table table-striped">
                 <thead>
@@ -47,5 +53,15 @@
         @else
             <h2 class="py-2">Inserisci qui i tuoi Appartamenti</h2>
         @endif
+
+        {{-- @if (count($results) > 0)
+            <ul>
+                @foreach ($results as $result)
+                <li>{{$result->name}}</li>
+                @endforeach
+            </ul>
+            @else
+                <p>Suca</p>
+            @endif --}}
     </div>
 @endsection

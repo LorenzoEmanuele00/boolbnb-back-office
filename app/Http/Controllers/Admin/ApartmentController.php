@@ -205,4 +205,11 @@ class ApartmentController extends Controller
         // return compact('coordinates');
 
     }
+
+    // public function search(Request $request){
+    //     $search = $request->input('search');
+    //     $results = Apartment::where('name', 'like', "%$search%")->get();
+
+    //     return view('apartments.index', ['results' => $results]);
+    // }
 }
