@@ -21,6 +21,9 @@ return new class extends Migration
             $table->foreign('sponsor_id')->references('id')->on('sponsors')->cascadeOnDelete();
 
             $table->primary(['apartment_id', 'sponsor_id']);
+
+            $table->dateTime('activation_date');
+            $table->dateTime('expiration_date');
         });
     }
 

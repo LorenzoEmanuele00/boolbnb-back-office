@@ -109,6 +109,13 @@
                                     <i class="fa-solid fa-house"></i> I tuoi Appartamenti
                                 </a>
                             </li>
+                            <li class="nav-item mb-2">
+                                <a class="nav-link {{ Route::currentRouteName() == 'admin.sponsor.create' ? 'red-bg border rounded-pill text-white' : 'red-hover border rounded-pill' }}"
+                                    href="{{ route('admin.sponsor.create') }}"> 
+                                    {{-- mettere admin index qua sopra --}}
+                                    <i class="fa-solid fa-house"></i> Sponsorizzazioni
+                                </a>
+                            </li>
                         </ul>
 
 
