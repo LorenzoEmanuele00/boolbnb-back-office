@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container py-5">
+        @if(session('success_message'))
+            <div class="alert alert-success my-2 text-center">
+                {{ session('success_message') }}
+            </div>
+        @endif
         <div class="row justify-content-center">
             <div class="card border border-0 text-center col-8 p-2">
                 <div class="card-body">
