@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'verified'])
         Route::get('/', [DashboardController::class, 'index'])->name ('dashboard');
         Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
         Route::resource('leads', LeadController::class)->parameters(['leads' => 'lead:id']);
+        Route::resource('sponsor', SponsorController::class)->parameters(['sponsors' => 'sponsor:id']);
     });
 
 require __DIR__.'/auth.php';

@@ -98,7 +98,7 @@
                             <li class="nav-item mb-2">
                                 <a class="nav-link {{ Route::currentRouteName() == 'admin.dashboard' ? 'red-bg border rounded-pill text-white' : 'red-hover border rounded-pill' }}"
                                     href="{{ route('admin.dashboard') }}">
-                                    <i class="fa-solid fa-list"></i> DashBoard
+                                    <i class="fa-solid fa-list pe-2"></i> DashBoard
                                 </a>
                             </li>
 
@@ -106,7 +106,15 @@
                                 <a class="nav-link {{ Route::currentRouteName() == 'admin.apartments.index' ? 'red-bg border rounded-pill text-white' : 'red-hover border rounded-pill' }}"
                                     href="{{ route('admin.apartments.index') }}"> 
                                     {{-- mettere admin index qua sopra --}}
-                                    <i class="fa-solid fa-house"></i> I tuoi Appartamenti
+                                    <i class="fa-solid fa-house pe-2"></i> I tuoi Appartamenti
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item mb-2">
+                                <a class="nav-link {{ Route::currentRouteName() == 'admin.sponsor.create' ? 'red-bg border rounded-pill text-white' : 'red-hover border rounded-pill' }}"
+                                    href="{{ route('admin.sponsor.create') }}"> 
+                                    {{-- mettere admin index qua sopra --}}
+                                    <i class="fa-solid fa-money-check-dollar pe-2"></i> Sponsorizzazioni
                                 </a>
                             </li>
                         </ul>
