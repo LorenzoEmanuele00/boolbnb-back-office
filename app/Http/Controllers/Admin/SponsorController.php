@@ -54,17 +54,6 @@ class SponsorController extends Controller
      */
     public function store(Request $request)
     {
-        $now = Carbon::now();
-
-        $id_sponsored = DB::table('apartment_sponsor')
-        ->where('expiration_date', '>=', $now)
-        ->where('apartment_id', '=', $request->apartment_id)
-        ->first();
-
-        if($id_sponsored != null){
-            return back()->with('sponsor_active_message', 'La tua sponsorizzazione è ancora valida fino al '.$id_sponsored->expiration_date);
-        }
-
         $gateway = new Braintree\Gateway([
             'environment' => config('services.braintree.environment'),
             'merchantId' => config('services.braintree.merchantId'),
@@ -76,8 +65,8 @@ class SponsorController extends Controller
         $apartment = Apartment::find($request->apartment_id);
         $sponsor = Sponsor::find($request->sponsor_id);
 
-        $end = $now->addHours($sponsor->duration)->format('Y-m-d H:i:s');
         $start = Carbon::now();
+        $end = Carbon::now()->addHours($sponsor->duration)->format('Y-m-d H:i:s');
 
         $result = $gateway->transaction()->sale([
             'amount' => $sponsor->price,
@@ -88,16 +77,37 @@ class SponsorController extends Controller
         ]);
 
         if ($result->success) {
-            $sponsor->apartments()->attach($apartment, ['activation_date' => $start, 'expiration_date' => $end]);
 
-            return redirect()->route('admin.apartments.show', $apartment)->with('success_message', 'Payment went through');
+            $id_sponsored = DB::table('apartment_sponsor')
+            ->where('expiration_date', '>=', $start)
+            ->where('apartment_id', '=', $request->apartment_id)
+            ->get();
+
+            if ($id_sponsored == null) {
+                $sponsor->apartments()->attach($apartment, ['activation_date' => $start, 'expiration_date' => $end]);
+            } else {
+                $new_start = $start;
+
+                foreach ($id_sponsored as $curr) {
+                    if ($curr->expiration_date >= $new_start) {
+                        $new_start = $curr->expiration_date;
+                    }
+                }
+
+                $start = $new_start;
+                $new_end = Carbon::parse($new_start);
+                $new_end->addHours($sponsor->duration)->format('Y-m-d H:i:s');
+
+                $sponsor->apartments()->attach($apartment, ['activation_date' => $start, 'expiration_date' => $end]);
+            }
+            return redirect()->route('admin.apartments.show', $apartment)->with('success_message', 'Il pagamento è avvenuto con successo - ' . $new_end . ' è la data di scadenza per la tua sponsorizzazione');
         } else {
             $errorString = "";
 
             foreach($result->errors->deepAll() as $error) {
                 $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
             }
-            return back()->withErrors('Payment didn\'t go through');
+            return back()->withErrors('Il pagamento non è andato a buon fine');
         }
     }
 
