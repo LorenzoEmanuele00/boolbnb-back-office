@@ -120,27 +120,33 @@ class ApartmentController extends Controller
             $form_data = $request->all();
 
             $imageToDelete = $request->input('image_to_delete', []);
+            $lat_lon = $this->getCoordinatesFromAddress($apartment->address);
+            if($lat_lon['coordinates'] == 'errore'){
+                return back()->withInput()->with('message', "L'indirizzo inserito non e' valito. Inserire indirizzo esistente.");
+            } else {
+                $apartment->longitude = $lat_lon['coordinates']['lon'];
+                $apartment->latitude  = $lat_lon['coordinates']['lat'];
 
-            foreach ($imageToDelete as $imageId) {
-                
-                $image = Image::findOrFail($imageId);
-
-                Storage::delete($image->image_path);
-
-                $image->delete();
-            }
-
-            if ($request->hasFile('new_image')) {
-                foreach ($request->file('new_image') as $file) {
+                foreach ($imageToDelete as $imageId) {
                     
-                    $image_path = $file->store('public/apartment_images');
+                    $image = Image::findOrFail($imageId);
 
-                    $apartment->images()->create([
-                        'image_path' => $image_path
-                    ]);
+                    Storage::delete($image->image_path);
+
+                    $image->delete();
+                }
+
+                if ($request->hasFile('new_image')) {
+                    foreach ($request->file('new_image') as $file) {
+                        
+                        $image_path = $file->store('public/apartment_images');
+
+                        $apartment->images()->create([
+                            'image_path' => $image_path
+                        ]);
+                    }
                 }
             }
-
             $apartment->update($form_data);
 
             if($request->has('services')) {
