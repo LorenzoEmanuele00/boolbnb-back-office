@@ -14,6 +14,7 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
+        $radius = $request->input('kmRange', 20);
         $apartments = Apartment::with('images', 'services');
 
         if($request->filled('address')){           
@@ -25,7 +26,7 @@ class ApartmentController extends Controller
                 ]);
             }
             else {
-                $apartments = $this->scopeDistance($apartments, $lat_lon['coordinates']['lat'], $lat_lon['coordinates']['lon']);
+                $apartments = $this->scopeDistance($apartments, $lat_lon['coordinates']['lat'], $lat_lon['coordinates']['lon'], $radius);
             }        
         }
 
