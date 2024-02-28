@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApartmentController;
+use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ServiceController;
 use Illuminate\Http\Request;
@@ -25,3 +26,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/apartments', [ApartmentController::class, 'index']);
 Route::get('/apartment/research/{slug}', [ApartmentController::class, 'show']);
 Route::get('/services', [ServiceController::class, 'index']);
+Route::get('/leads', [LeadController::class, 'store']);
