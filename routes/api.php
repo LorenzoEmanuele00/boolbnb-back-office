@@ -24,4 +24,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/apartments', [ApartmentController::class, 'index']);
 Route::get('/apartment/research/{slug}', [ApartmentController::class, 'show']);
+Route::get('/apartment/filtered', [ApartmentController::class, 'searchFilter']);
 Route::get('/services', [ServiceController::class, 'index']);
+Route::post('/apartments/service_filter', [ApartmentController::class, 'checkbox_filter']);

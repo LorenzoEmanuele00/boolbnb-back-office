@@ -14,8 +14,7 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $apartments     = Apartment::with('images', 'services');
-        $query = Apartment::query();
+        $apartments = Apartment::with('images', 'services');
 
         if($request->filled('address')){           
             $lat_lon = $this->getCoordinatesFromAddress($request->address);
@@ -26,18 +25,22 @@ class ApartmentController extends Controller
                 ]);
             }
             else {
-                $query = $this->scopeDistance($apartments, $lat_lon['coordinates']['lat'], $lat_lon['coordinates']['lon']);
+                $apartments = $this->scopeDistance($apartments, $lat_lon['coordinates']['lat'], $lat_lon['coordinates']['lon']);
             }        
         }
 
         $services_selected = $request->input('services', []);
+        if($services_selected){
+            $int_array = array_map('intval', $services_selected);
 
-        foreach ($services_selected as $service) {
+            foreach ($int_array as $service) {
 
-            $query->whereHas('services', function ($query) use ($service) {
-                $query->where('id', $service);
-            });
+                $apartments->whereHas('services', function ($query) use ($service) {
+                    $query->where('id', $service);
+                });
+            }
         }
+        
 
 
         $finalQuery = $apartments->paginate(10);
@@ -137,8 +140,9 @@ class ApartmentController extends Controller
         }
 
         $services_selected = $request->input('services', []);
+        $int_array = array_map('intval', $services_selected);
 
-        foreach ($services_selected as $service) {
+        foreach ($int_array as $service) {
 
             $query->whereHas('services', function ($query) use ($service) {
                 $query->where('name', $service);
@@ -149,4 +153,15 @@ class ApartmentController extends Controller
 
     }
 
+    public function checkbox_filter(Request $request) {
+        if($request->isMethod('post')){
+            $data = $request->input();
+            foreach($data as $key => $value) {
+                $items = Apartment::join('apartment_service', 'apartments.id', '=', 'apartment_service.apartment_id')->join('services', 'services.id', '=', 'apartment_service.service_id')->whereIn('services.id', $data['services'])->get();
+            }
+            $result = json_encode($items, true);
+            return $result;
+            dd($result);
+        }
+    }
 }
