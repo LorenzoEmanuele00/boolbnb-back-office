@@ -55,7 +55,7 @@ class ApartmentController extends Controller
             $apartments->where('bathrooms_number', '>=', $bathrooms);
         }
 
-        $finalQuery = $$apartments->paginate(10);
+        $finalQuery = $apartments->paginate(10);
 
         return response()->json([
             'results' => $finalQuery,
