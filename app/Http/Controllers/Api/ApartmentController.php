@@ -18,7 +18,61 @@ class ApartmentController extends Controller
         $rooms      = $request->input('rooms_number');
         $beds       = $request->input('beds_number');
         $bathrooms  = $request->input('bathrooms_number');
-        $apartments = Apartment::with('images', 'services');
+        $apartments = Apartment::with('images', 'services', 'sponsors');
+
+        if($request->filled('address')){           
+            $lat_lon = $this->getCoordinatesFromAddress($request->address);
+            if($lat_lon['coordinates'] == 'errore'){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Nessun appartamento trovato'
+                ]);
+            }
+            else {
+                $apartments = $this->scopeDistance($apartments, $lat_lon['coordinates']['lat'], $lat_lon['coordinates']['lon'], $radius);
+            }        
+        }
+
+        $services_selected = $request->input('services', []);
+        if($services_selected){
+            $int_array = array_map('intval', $services_selected);
+
+            foreach ($int_array as $service) {
+
+                $apartments->whereHas('services', function ($query) use ($service) {
+                    $query->where('id', $service);
+                });
+            }
+        }
+        
+        if ($rooms > 0) {
+            $apartments->where('rooms_number', '>=', $rooms);
+        }
+        if ($beds > 0) {
+            $apartments->where('beds_number', '>=', $beds);
+        }
+        if ($bathrooms > 0) {
+            $apartments->where('bathrooms_number', '>=', $bathrooms);
+        }
+
+        $finalQuery = $$apartments->paginate(10);
+
+        return response()->json([
+            'results' => $finalQuery,
+            'success' => true
+        ]);
+    }
+
+    public function getSponsored(Request $request) 
+    {
+        $radius     = $request->input('kmRange', 20);
+        $rooms      = $request->input('rooms_number');
+        $beds       = $request->input('beds_number');
+        $bathrooms  = $request->input('bathrooms_number');
+        $apartments = Apartment::with('images', 'services', 'sponsors');
+        $apartments->whereHas('sponsors', function ($query) {
+            $query->where('expiration_date', '>', now());
+        });
 
         if($request->filled('address')){           
             $lat_lon = $this->getCoordinatesFromAddress($request->address);

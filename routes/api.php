@@ -28,3 +28,4 @@ Route::get('/apartment/research/{slug}', [ApartmentController::class, 'show']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::post('/apartments/service_filter', [ApartmentController::class, 'checkbox_filter']);
 Route::post('/leads', [LeadController::class, 'store']);
+Route::get('/apartments/sponsored', [ApartmentController::class, 'getSponsored']);
