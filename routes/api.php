@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApartmentController;
+use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ServiceController;
 use Illuminate\Http\Request;
@@ -27,3 +28,4 @@ Route::get('/apartment/research/{slug}', [ApartmentController::class, 'show']);
 Route::get('/apartment/filtered', [ApartmentController::class, 'searchFilter']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::post('/apartments/service_filter', [ApartmentController::class, 'checkbox_filter']);
+Route::post('/leads', [LeadController::class, 'store']);
