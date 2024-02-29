@@ -14,7 +14,10 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $radius = $request->input('kmRange', 20);
+        $radius     = $request->input('kmRange', 20);
+        $rooms      = $request->input('rooms_number');
+        $beds       = $request->input('beds_number');
+        $bathrooms  = $request->input('bathrooms_number');
         $apartments = Apartment::with('images', 'services');
 
         if($request->filled('address')){           
@@ -42,7 +45,15 @@ class ApartmentController extends Controller
             }
         }
         
-
+        if ($rooms > 0) {
+            $apartments->where('rooms_number', '>=', $rooms);
+        }
+        if ($beds > 0) {
+            $apartments->where('beds_number', '>=', $beds);
+        }
+        if ($bathrooms > 0) {
+            $apartments->where('bathrooms_number', '>=', $bathrooms);
+        }
 
         $finalQuery = $apartments->paginate(10);
 
