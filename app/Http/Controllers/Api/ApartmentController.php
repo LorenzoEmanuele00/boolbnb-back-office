@@ -18,7 +18,7 @@ class ApartmentController extends Controller
         $rooms      = $request->input('rooms_number');
         $beds       = $request->input('beds_number');
         $bathrooms  = $request->input('bathrooms_number');
-        $apartments = Apartment::with('images', 'services', 'sponsors');
+        $apartments = Apartment::with('images', 'services');
 
         if($request->filled('address')){           
             $lat_lon = $this->getCoordinatesFromAddress($request->address);
@@ -109,7 +109,7 @@ class ApartmentController extends Controller
             $apartments->where('bathrooms_number', '>=', $bathrooms);
         }
 
-        $finalQuery = $apartments->paginate(10);
+        $finalQuery = $apartments->get();
 
         return response()->json([
             'results' => $finalQuery,
