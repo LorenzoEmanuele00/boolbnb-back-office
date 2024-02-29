@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// BRAINTREE
-use Braintree;
 use App\Models\Apartment;
 use App\Models\Sponsor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+
+// BRAINTREE
+use Braintree;
 
 class SponsorController extends Controller
 {
@@ -65,8 +66,8 @@ class SponsorController extends Controller
         $apartment = Apartment::find($request->apartment_id);
         $sponsor = Sponsor::find($request->sponsor_id);
 
-        $start = Carbon::now();
-        $end = Carbon::now()->addHours($sponsor->duration)->format('Y-m-d H:i:s');
+        $start = Carbon::now('Europe/Rome');
+        $end = Carbon::now('Europe/Rome')->addHours($sponsor->duration)->format('Y-m-d H:i:s');
 
         $result = $gateway->transaction()->sale([
             'amount' => $sponsor->price,
