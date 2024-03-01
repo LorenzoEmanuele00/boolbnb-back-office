@@ -17,11 +17,15 @@
                         <th scope="col">Titolo</th>
                         <th scope="col">Prezzo</th>
                         <th scope="col">Disponibilità</th>
+                        <th scope="col">Sponsorizzazione</th>
                         <th scope="col">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($apartments as $apartment)
+
+                        {{-- @dd(count($apartment->sponsors) == 0 ? 'happy' : 'sad'); --}}
+
                         <tr>
                             <th scope="row">{{$apartment->title}}</th>
                             <td>
@@ -30,6 +34,15 @@
                             <td>
                                 {{$apartment->is_visible === 1 ? 'Disponibile' : 'Non disponibile'}}
                             </td>
+                            @if (count($apartment->sponsors) !== 0 && Carbon\Carbon::now() < $apartment->sponsors[count($apartment->sponsors) - 1]['pivot']['expiration_date'])
+                                <td>
+                                    Attiva fino al {{$apartment->sponsors[count($apartment->sponsors) - 1]['pivot']['expiration_date']}}
+                                </td>
+                            @else
+                                <td>
+                                    Non Attiva
+                                </td>
+                            @endif
                             <td>
                                 <a class="btn btn-primary" style="width: 40px" href="{{ route('admin.apartments.show', ['apartment' => $apartment->slug]) }}"><i class="fa-solid fa-info"></i></a>
                                 <a class="btn btn-warning text-light" style="width: 40px" href="{{ route('admin.apartments.edit', ['apartment' => $apartment->slug]) }}"><i class="fa-solid fa-pencil"></i></a>

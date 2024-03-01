@@ -30,7 +30,7 @@ class Apartment extends Model
     }
 
     public function sponsors() {
-        return $this->belongsToMany(Sponsor::class);
+        return $this->belongsToMany(Sponsor::class)->withPivot('expiration_date');;
     }
 
     public function images() {
