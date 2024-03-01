@@ -18,6 +18,7 @@
                         <th scope="col">Prezzo</th>
                         <th scope="col">Disponibilità</th>
                         <th scope="col">Sponsorizzazione</th>
+                        <th scope="col">Messaggi</th>
                         <th scope="col">Azioni</th>
                     </tr>
                 </thead>
@@ -43,6 +44,9 @@
                                     Non Attiva
                                 </td>
                             @endif
+                            <td>
+                                {{count($apartment->leads)}}
+                            </td>
                             <td>
                                 <a class="btn btn-primary" style="width: 40px" href="{{ route('admin.apartments.show', ['apartment' => $apartment->slug]) }}"><i class="fa-solid fa-info"></i></a>
                                 <a class="btn btn-warning text-light" style="width: 40px" href="{{ route('admin.apartments.edit', ['apartment' => $apartment->slug]) }}"><i class="fa-solid fa-pencil"></i></a>
