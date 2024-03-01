@@ -10,9 +10,15 @@
         <div class="row justify-content-center">
             <div class="card border border-0 text-center col-8 p-2">
                 <div class="card-body">
-                    <h5 class="card-title fs-4 fw-bold mt-2 mb-2">{{ $apartment->title }}</h5>
+                    <h5 class="card-title fs-4 fw-bold my-2">{{ $apartment->title }}</h5>
                     <h6 class="card-subtitle text-muted">{{ $apartment->address }}</h6>
-                    <p class="mb-4 text-muted">({{ $apartment->latitude }} , {{ $apartment->longitude }})</p>
+                    <p class="mb-3 text-muted">({{ $apartment->latitude }} , {{ $apartment->longitude }})</p>
+                    @if (count($apartment->sponsors) !== 0 && Carbon\Carbon::now() < $apartment->sponsors[count($apartment->sponsors) - 1]['pivot']['expiration_date'])
+                        <p class="mb-2 text-success">Sponsor: Attiva fino al {{$apartment->sponsors[count($apartment->sponsors) - 1]['pivot']['expiration_date']}}</p>
+                        
+                    @else
+                        <p class="mb-2 text-warning">Sponsor: Non Attiva</p>
+                    @endif
                     <p>Prezzo: <span class="text-danger">{{ $apartment->price }}$</span></p>
                     <p>Dimensione: <span class="text-primary">{{ $apartment->dimension_mq }} mq</span></p>
                     <p>{{ $apartment->rooms_number }} camere da letto - {{ $apartment->beds_number }} letti - {{ $apartment->bathrooms_number }} bagni</p>
@@ -46,13 +52,15 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Mittente</th>
+                                        <th scope="col">Data</th>
                                         <th scope="col">Leggi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($leads as $lead)
+                                    @foreach ($leads->reverse($leads) as $lead)
                                         <tr>
                                             <td>{{$lead->first_name}} {{$lead->last_name}}</td>
+                                            <td>{{$lead->created_at}}</td>
                                             <td>
                                                 <a class="btn btn-primary" style="width: 40px" href="{{ route('admin.leads.show', ['lead' => $lead->id]) }}"><i class="fa-solid fa-message"></i></a>
                                             </td>
