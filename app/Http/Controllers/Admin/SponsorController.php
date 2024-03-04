@@ -66,8 +66,8 @@ class SponsorController extends Controller
         $apartment = Apartment::find($request->apartment_id);
         $sponsor = Sponsor::find($request->sponsor_id);
 
-        $start = Carbon::now('Europe/Rome');
-        $end = Carbon::now('Europe/Rome')->addHours($sponsor->duration)->format('Y-m-d H:i:s');
+        $start = Carbon::now();
+        $end = Carbon::now()->addHours($sponsor->duration)->format('Y-m-d H:i:s');
 
         $result = $gateway->transaction()->sale([
             'amount' => $sponsor->price,
@@ -98,8 +98,9 @@ class SponsorController extends Controller
                 $start = $new_start;
                 $new_end = Carbon::parse($new_start);
                 $new_end->addHours($sponsor->duration)->format('Y-m-d H:i:s');
+                // dd($sponsor->duration);
 
-                $sponsor->apartments()->attach($apartment, ['activation_date' => $start, 'expiration_date' => $end]);
+                $sponsor->apartments()->attach($apartment, ['activation_date' => $start, 'expiration_date' => $new_end]);
             }
             return redirect()->route('admin.apartments.show', $apartment)->with('success_message', 'Il pagamento è avvenuto con successo - ' . $new_end . ' è la data di scadenza per la tua sponsorizzazione');
         } else {
