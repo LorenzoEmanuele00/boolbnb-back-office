@@ -37,9 +37,9 @@
                     @endif
                     
                     @if ($apartment->images)
-                        <div class="d-flex">
+                        <div class="d-flex flex-wrap">
                             @foreach ($apartment->images as $image)
-                            <img class="w-25 py-4 m-auto" src="{{ asset('storage/' . $image->image_path) }}" alt="">
+                            <img class="w-25 py-4 m-auto p-2" src="{{ asset('storage/' . $image->image_path) }}" alt="">
                             @endforeach
                         </div>
                     @else
